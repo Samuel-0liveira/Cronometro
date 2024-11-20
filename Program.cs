@@ -25,10 +25,10 @@ namespace Stopwatch
             switch(option)
             {
                 case 1:
-                    CountForward();
+                    Count(1);
                     break;
                 case 2:
-                    Countdown();
+                    Count(2);
                     break;
                 case 0:
                     System.Environment.Exit(0);
@@ -39,7 +39,7 @@ namespace Stopwatch
             }
         }
 
-        static void CountForward()
+        static void Count(int option)
         {
             Console.Clear();
             
@@ -47,7 +47,7 @@ namespace Stopwatch
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("S = Segundo - 10s = 10 segundos");
             Console.WriteLine("M = Minuto - 1m = 1 minuto");
-            Console.WriteLine("0s = Sair");
+            Console.WriteLine("0s = Menu anterior");
             string data = Console.ReadLine()!.ToLower();
             
             char type = char.Parse(data.Substring(data.Length - 1,1));
@@ -62,18 +62,13 @@ namespace Stopwatch
 
             if (time == 0)
             {
-                System.Environment.Exit(0);
+                Menu();
             }
 
-            PreStart(time * multiplier);
+            PreStart(time * multiplier, option);
         }
 
-        static void Countdown()
-        {
-
-        }
-
-        static void PreStart(int time)
+        static void PreStart(int time, int option)
         {
             Console.Clear();
 
@@ -86,21 +81,34 @@ namespace Stopwatch
             Console.WriteLine("GO!");
             Thread.Sleep(2500);
 
-            Start(time);
+            Start(time, option);
         }
 
-        static void Start(int time)
+        static void Start(int time, int option)
         {
             int currentTime = 0;
 
-            while(currentTime != time)
+            if (option == 1)
             {
-                Console.Clear();
-                currentTime++;
-                Console.WriteLine(currentTime);
-                Thread.Sleep(1000);
-            }
+                while(currentTime != time)
+                {
+                    Console.Clear();
+                    currentTime++;
+                    Console.WriteLine(currentTime);
+                    Thread.Sleep(1000);
+                }
+            } else if (option == 2) {
+                currentTime = time;
 
+                while(currentTime != 0)
+                {
+                    Console.Clear();
+                    Console.WriteLine(currentTime);
+                    currentTime--;
+                    Thread.Sleep(1000);
+                }
+            }
+            
             Console.Clear();
             Console.WriteLine("Stopwatch finalizado.");
             Thread.Sleep(2500);
