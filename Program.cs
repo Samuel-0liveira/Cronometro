@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 
 namespace Stopwatch
@@ -11,6 +12,34 @@ namespace Stopwatch
         }
 
         static void Menu()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Qual contagem deseja fazer?");
+            Console.WriteLine("-------------------------------");
+            Console.WriteLine("(1) - Progressiva");
+            Console.WriteLine("(2) - Regressiva");
+            Console.WriteLine("(0) - Sair");
+            int option = int.Parse(Console.ReadLine()!);
+
+            switch(option)
+            {
+                case 1:
+                    CountForward();
+                    break;
+                case 2:
+                    Countdown();
+                    break;
+                case 0:
+                    System.Environment.Exit(0);
+                    break;
+                default:
+                    Menu();
+                    break;
+            }
+        }
+
+        static void CountForward()
         {
             Console.Clear();
             
@@ -37,6 +66,11 @@ namespace Stopwatch
             }
 
             PreStart(time * multiplier);
+        }
+
+        static void Countdown()
+        {
+
         }
 
         static void PreStart(int time)
